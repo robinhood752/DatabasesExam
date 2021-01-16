@@ -1,0 +1,27 @@
+1) 
+	a. POCO -	Plain old CLR object. In databases case, represents table/view etc as an object.
+				Equals overriding is nesessary, because default one will compare object references and will not be able to recognize equality by variables if we want to compare using it
+2) 
+	a.	Primary Key		- Unique table identifier
+	b.	Foreign Key		- Table colimn Unique identifier, that is the key in another table
+	c.	1:1				- Relation between tables, where one and only one row from the table relates to one row from another.
+		one to many		- Relation between tables, where one row from the table relates to many rows from another, but not vice versa.
+		many to many	- Relation between tables, where multiple rows from the table relate to rows from another, and vice versa.
+	d.	UNIQUE			- Column that cannot have 
+	
+3)	Stored procedure provide more secure, more robust and faster way access to database
+
+4)	Connection string - lists parameters needed for connecting to database from the project.
+	Stored in XML/Json etc configuration files, preferably in separate project, so the changes can be made without stopping the application
+
+5) 
+	•Inner Join -		Combine tables where only matching found for both included
+	•Full Outer Join -	Combine tables, include if any of tables have values
+	•Left Join -		All values from left table and matching rows from right table.
+	•Right Join -		Same as left join, only where all values from right table 
+
+6)	Linq - language integrated query, set of methods built to easily access database object, however it can be used on 
+
+7) Logger writes messages decided by the developer. When accessing database at times will need to write connection issues, failed requests, queries.
+
+9) Partition - separating database table into smaller elements. Provides faster access to response, given the column partitioned.
