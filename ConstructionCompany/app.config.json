@@ -1,0 +1,5 @@
+{
+  "construction-company": {
+    "connection-string": "Server=localhost;Port=5432;Database=construction_company;UserId=postgres;Password=admin;SearchPath=dbo"
+  }
+}

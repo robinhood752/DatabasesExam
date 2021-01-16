@@ -1,0 +1,5 @@
+{
+  "mall": {
+    "connection-string": "Data Source=.;Initial Catalog=Mall;Integrated Security=True"
+  }
+}

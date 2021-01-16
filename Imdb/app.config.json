@@ -1,0 +1,5 @@
+{
+  "imdb": {
+    "connection-string": "Server=localhost;Port=5432;Database=imdb;UserId=postgres;Password=admin;SearchPath=dbo"
+  }
+}

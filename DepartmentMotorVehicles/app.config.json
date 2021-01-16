@@ -1,0 +1,5 @@
+{
+  "department-motor-vehicles": {
+    "connection-string": "Data Source = D:\\Program Files\\DB Browser for SQLite\\DepartmentMotorVehicles.db; Version = 3;"
+  }
+}
