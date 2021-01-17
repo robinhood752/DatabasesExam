@@ -1,0 +1,83 @@
+-- ב --------------------
+create or replace function workers_with_roles() returns table(name text, phone text, salary int, role text)
+as
+$$
+begin
+    select w.name, w.phone, w.salary, r.name
+    from workers w left join roles r on w.role_id = r.id;
+end;
+$$ language plpgsql;
+
+-- ג --------------------
+create or replace function site_with_max_workers() returns table(site_id bigint, site_name text)
+as
+$$
+begin
+    select id, name from sites
+    where id = (
+        select site_id from workers
+        group by site_id
+        order by count(id) desc
+        limit 1);
+end;
+$$ language plpgsql;
+
+-- ד --------------------
+create or replace function workers_at_site(site int) returns table(name text, phone text, salary int)
+as
+$$
+begin
+    select name, phone, salary from workers
+    where site_id = site;
+end;
+$$ language plpgsql;
+
+-- ה --------------------
+create or replace procedure update_salary()
+as
+$$
+declare
+    worker_ids     bigint[];
+    worker_id      bigint;
+    worker_role_id bigint;
+begin
+    worker_ids = array(select id from dbo.workers);
+    foreach worker_id in array (worker_ids)
+        loop
+            worker_role_id := (select role_id from workers where id = worker_id);
+
+            if worker_role_id = 1 then
+                update workers set salary = 10000 where id = worker_id;
+            else
+                update workers set salary = floor(random() * 5001 + 5000) where id = worker_id;
+            end if;
+        end loop;
+end;
+$$ language plpgsql;
+
+call update_salary();
+
+-- ו --------------------
+
+-- ז --------------------
+
+-- ח --------------------
+
+-- ט --------------------
+
+create procedure add_salary(add int = 500)
+as
+$$
+declare
+    worker_ids     bigint[];
+    worker_id      bigint;
+    worker_role_id bigint;
+begin
+    worker_ids = array(select id from dbo.workers);
+    foreach worker_id in array (worker_ids)
+        loop
+            worker_role_id := (select role_id from workers where id = worker_id);
+            update workers set salary = salary + add where id = worker_id;
+        end loop;
+end;
+$$ language plpgsql;
