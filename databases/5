@@ -1,0 +1,103 @@
+create table dbo.roles
+(
+	id bigserial
+		constraint roles_pk
+			primary key,
+	name text
+);
+
+--------------------------------------------------
+
+create table dbo.sites
+(
+	id bigserial
+		constraint sites_pk
+			primary key,
+	name text,
+	address text
+);
+
+--------------------------------------------------
+
+create table dbo.workers
+(
+	id bigserial
+		constraint workers_pk
+			primary key,
+	name text,
+	phone text,
+	salary int,
+	role_id bigint
+		constraint workers_roles_id_fk
+			references dbo.roles,
+	site_id bigint
+		constraint workers_sites_id_fk
+			references dbo.sites
+);
+
+--------------------------------------------------
+
+insert into roles (name)
+values ('Construction Manager'),
+       ('Estimator'),
+       ('Architect'),
+       ('Supervisor'),
+       ('Construction Expeditor'),
+       ('Construction Worker'),
+       ('Engineer'),
+       ('Electrician'),
+       ('Construction Foreman')
+
+--------------------------------------------------
+	   
+insert into dbo.sites (name, address)
+values ('Al Maktoum International Airport', 'Dubai'),
+       ('Jubail II', 'Saudi Arabia'),
+       ('Dubailand', 'Dubai'),
+       ('International Space Station', 'Space'),
+       ('South-North Water Transfer Project', 'China'),
+       ('London Crossrail Project', null),
+       ('High-Speed Railway', 'California'),
+       ('Chuo Shinkansen', 'Japan'),
+       ('Beijing Airport', 'China'),
+       ('Great Man-Made River Project', 'Libya');
+
+--------------------------------------------------
+
+drop function pg_temp.random_role();
+
+create or replace function pg_temp.random_role() returns bigint as
+$$
+select floor(random() * (select max(id) from roles) + 1)::bigint
+$$ language plpgsql;
+
+drop function pg_temp.random_site();
+
+create or replace function pg_temp.random_site() returns bigint as
+$$
+select floor(random() * (select max(id) from sites) + 1)::bigint
+$$ language plpgsql;
+
+insert into workers (name, phone, role_id, site_id)
+values ('Leticia B. Cramer', '079 5701 0531', pg_temp.random_role(), pg_temp.random_site()),
+       ('Felipe D. Voss', '618-893-4915', pg_temp.random_role(), pg_temp.random_site()),
+       ('Leticia B. Cramer', '079 5701 0531', pg_temp.random_role(), pg_temp.random_site()),
+       ('Felipe D. Voss', '618-893-4915', pg_temp.random_role(), pg_temp.random_site()),
+       ('Walter E. Alcorn', '740-689-1670', pg_temp.random_role(), pg_temp.random_site()),
+       ('Dorothy W. Clark', '210-288-7015', pg_temp.random_role(), pg_temp.random_site()),
+       ('Mammie R. McClanahan', '662-985-5957', pg_temp.random_role(), pg_temp.random_site()),
+       ('Kenneth C. Cornelius', '414-471-3516', pg_temp.random_role(), pg_temp.random_site()),
+       ('Theresa J. Costello', '985-242-8858', pg_temp.random_role(), pg_temp.random_site()),
+       ('Rhonda J. Owens', '817-283-3176', pg_temp.random_role(), pg_temp.random_site()),
+       ('Melissa B. Darden', '404-646-5148', pg_temp.random_role(), pg_temp.random_site()),
+       ('Richard J. Yingling', '253-472-3947', pg_temp.random_role(), pg_temp.random_site()),
+       ('George T. Currin', '216-903-2964', pg_temp.random_role(), pg_temp.random_site()),
+       ('Robert V. Griffin', '856-556-6766', pg_temp.random_role(), pg_temp.random_site()),
+       ('Barry H. Smith', '361-844-6972', pg_temp.random_role(), pg_temp.random_site()),
+       ('Steven D. Hester', '949-699-5925', pg_temp.random_role(), pg_temp.random_site()),
+       ('Pauline L. White', '302-723-2495', pg_temp.random_role(), pg_temp.random_site()),
+       ('Donnell L. Sorenson', '315-837-4500', pg_temp.random_role(), pg_temp.random_site()),
+       ('Bruce M. Perry', '440-684-8176', pg_temp.random_role(), pg_temp.random_site()),
+       ('Carolina R. King', '046 820 9400', pg_temp.random_role(), pg_temp.random_site()),
+       ('Wendy G. Estrada', '0392 2154042', pg_temp.random_role(), pg_temp.random_site()),
+       ('Sierra D. Jackson', '0332 4540750', pg_temp.random_role(), pg_temp.random_site())
